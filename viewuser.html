@@ -1,0 +1,54 @@
+<div class="common-header">
+  <nav>
+    <!-- <img src="images/logo.jpg"> </img> -->
+    <span ng-class="{active: isActive('/adduser')}">
+      <a ui-sref="adduser"> <span class="inner-span glyphicon glyphicon-asterisk"></span> AddUser </a>
+    </span>
+    <span ng-class="{active: isActive('/viewuser')}">
+      <a ui-sref="viewuser"><span class="inner-span glyphicon glyphicon-transfer"></span>  ViewUsers </a>
+    </span>
+    <span ng-class="{active: isActive('/login')}">
+      <a ui-sref="login"> <span class="inner-span glyphicon glyphicon-log-out"></span>  SignOut </a>
+    </span>
+  </nav>
+</div>
+
+<div class="container">
+  <div>
+    <span class="page-info"> Showing the entries </span>
+    <div class="form-group">
+      <label>Search </label>
+      <input type="text" ng-model="search"></input>
+    </div>
+    <dir-pagination-controls max-size="2" direction-links="true" boundary-links="true">
+    </dir-pagination-controls>
+  </div>
+  <table id="userTable" class="table table-stripped">
+    <thead>
+      <tr>
+        <th ng-click="sort('userid')">UserID
+          <span class="glyphicon sort-icon" ng-show="sortKey=='userid'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('firstname')">First Name
+          <span class="glyphicon sort-icon" ng-show="sortKey=='firstname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('lastname')">Last Name
+          <span class="glyphicon sort-icon" ng-show="sortKey=='lastname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('password')">Password
+          <span class="glyphicon sort-icon" ng-show="sortKey=='password'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th> Action </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr dir-paginate="obj in userList | orderBy:sortKey:reverse | filter:search | itemsPerPage:5 track by $index">
+        <td>{{obj.userid}}</td>
+        <td>{{obj.firstname}}</td>
+        <td>{{obj.lastname}}</td>
+        <td>{{obj.password}}</td>
+        <td><span ng-if="obj.userid !== 'admin'" class="span-delete glyphicon glyphicon-trash" ng-click="deleteUser(obj.userid)"></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
